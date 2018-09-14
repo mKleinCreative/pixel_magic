@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  
+</head>
+<body>
+  <h1>PixelMagic</h1>
+  <div></div>
+  <script src="./Picture.js"></script>
+  <script src="./PictureCanvas.js"></script>
+  <script src="./ToolSelect.js"></script>
+  <script src="./SaveButton.js"></script>
+  <script src="./UndoButton.js"></script>
+  <script src="./LoadButton.js"></script>
+  <script src="./ColorSelect.js"></script>
+  <script src="./PixelEditor.js"></script>
+  <script>
+    let state = {
+      tool: "draw",
+      color: "#000000",
+      picture: Picture.empty(60, 30, "#f0f0f0")
+    };
+    let app = new PixelEditor(state, {
+      tools: { draw, fill, rectangle, pick },
+      controls: [ToolSelect, ColorSelect],
+      dispatch(action) {
+        state = updateState(state, action);
+        app.syncState(state);
+      }
+    });
+    document.querySelector("div").appendChild(app.dom);
+  </script>
+  <script>
+    document.querySelector("div")
+      .appendChild(startPixelEditor({}));
+  </script>
+</body>
+</html>
